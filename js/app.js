@@ -1,55 +1,36 @@
 app = angular.module("app", [] );
 
+app.controller("TabelaController", function( $scope, $http ){
 
-app.controller("TabelaController", function( $scope ){
+    $scope.data = [];
+    $scope.title = "Fixando header e primeira coluna da tabela!";
 
-  $scope.data = [];
-  $scope.title = "Fixando header e primeira coluna da tabela!";
-
-  for (var i = 0; i < 100; i++) {
-    $scope.data.push(
-      {
-        "id": i,
-        "firstName": "Nome do Candango "+ i,
-        "lastName": "Sobrenome do Candango" + i,
-        "sex": sexPerson(i),
-        "phone": numberRandom(i),
-        "cep": numberRandom(i+1),
-        "city": "Rio de Janerio",
-        "district": "Rio de Janerio",
-        "nation": "Brazil"
-      }
-    );
-  }
-
-  function numberRandom ( indice ){
-    return "9" + Math.floor((Math.random() * 100000000) + indice);
-  }
-
-  function sexPerson( i ){
-    if (i % 2 == 0 ) {
-      return "Masculino";
-    }
-    return "Feminino";
-  }
+    $http.get('vendor/data.json').then(function(response) {
+        $scope.data = response.data;
+    });
 
 });
 
+var HeaderAndColumnFixed = function ( wrapper ){
+    $contaner = $(wrapper);
+    let widthContainer = $contaner.innerWidth();
+    let heightContainer = $contaner.innerHeight();
+    $contaner.find("table").css({"width": widthContainer, "height": heightContainer });
+    $contaner.find("thead").css({"width": widthContainer});
+    $contaner.find("tbody").css({"width": widthContainer, "height": heightContainer });
+
+    $contaner.find('tbody').scroll(function(e) {
+        $contaner.find('thead').css("left", -$contaner.find("tbody").scrollLeft());
+        $contaner.find('thead th:nth-child(1)').css("left", $contaner.find("tbody").scrollLeft());
+        $contaner.find('tbody td:nth-child(1)').css("left", $contaner.find("tbody").scrollLeft());
+    });
+}
+
 
 $(document).ready(function() {
-  let widthContainer = $(".container").innerWidth();
-  let heightContainer = $(".container").innerHeight();
-  $("table").css({"width": widthContainer, "height": heightContainer });
-  $("thead").css({"width": widthContainer});
-  $("tbody").css({"width": widthContainer, "height": heightContainer });
+    HeaderAndColumnFixed(".container");
+});
 
-  console.log(widthContainer);
-  console.log(heightContainer);
-
-
-  $('tbody').scroll(function(e) {
-    $('thead').css("left", -$("tbody").scrollLeft());
-    $('thead th:nth-child(1)').css("left", $("tbody").scrollLeft());
-    $('tbody td:nth-child(1)').css("left", $("tbody").scrollLeft());
-  });
+$(window).resize(function(){
+    HeaderAndColumnFixed(".container");
 });
