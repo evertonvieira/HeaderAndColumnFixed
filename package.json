@@ -1,0 +1,27 @@
+{
+  "name": "headerandcolumnfixed",
+  "version": "1.0.0",
+  "description": "Fixando Header e Primeira coluna da tabela ao rodar o scrool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mock": "nodemon api/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evertonvieira/HeaderAndColumnFixed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evertonvieira/HeaderAndColumnFixed/issues"
+  },
+  "homepage": "https://github.com/evertonvieira/HeaderAndColumnFixed#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
